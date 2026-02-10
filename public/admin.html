@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Survei 25 - Admin Panel">
+    <title>Admin - SURVEI 25</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <!-- Admin Login -->
+    <div id="adminLogin" class="auth-page">
+        <div class="auth-container">
+            <div class="auth-logo">
+                <img src="/logo.png" alt="Logo"
+                    onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27100%27 height=%27100%27 viewBox=%270 0 100 100%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2745%27 fill=%27%236366f1%27/%3E%3Ctext x=%2750%27 y=%2755%27 text-anchor=%27middle%27 fill=%27white%27 font-size=%2736%27 font-weight=%27bold%27 font-family=%27sans-serif%27%3ES25%3C/text%3E%3C/svg%3E'">
+                <h1 class="auth-brand">ADMIN PANEL</h1>
+                <p class="auth-subtitle">Survei 25 Control Center</p>
+            </div>
+            <div class="auth-card">
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label class="form-label" for="adminUser">Username</label>
+                        <input type="text" id="adminUser" class="form-input" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="adminPass">Password</label>
+                        <input type="password" id="adminPass" class="form-input" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login Admin</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-page hidden">
+        <header class="admin-header">
+            <span class="brand">📊 SURVEI 25</span>
+            <nav class="admin-nav" id="adminNav">
+                <button class="active" data-view="dashboard">Dashboard</button>
+                <button data-view="create">+ Buat Survei</button>
+                <button data-view="results">Hasil</button>
+                <button id="logoutBtn" style="color: var(--danger);">Logout</button>
+            </nav>
+        </header>
+
+        <div class="admin-content">
+            <!-- Dashboard View -->
+            <div id="view-dashboard" class="admin-view">
+                <div class="stats-grid" id="statsGrid"></div>
+                <div class="section-header">
+                    <h2>Daftar Survei</h2>
+                </div>
+                <div class="survey-list" id="surveyList"></div>
+            </div>
+
+            <!-- Create/Edit Survey View -->
+            <div id="view-create" class="admin-view hidden">
+                <div class="admin-form">
+                    <h2 id="formTitle">Buat Survei Baru</h2>
+                    <form id="surveyForm">
+                        <input type="hidden" id="editSurveyId" value="">
+
+                        <div class="form-group">
+                            <label class="form-label">Judul Survei</label>
+                            <input type="text" id="sTitle" class="form-input"
+                                placeholder="Contoh: Voting Film Pensi 2025" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Deskripsi</label>
+                            <input type="text" id="sDescription" class="form-input"
+                                placeholder="Deskripsi singkat survei">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Tipe Survei</label>
+                            <select id="sType" class="form-select">
+                                <option value="single_choice">Pilihan Tunggal (Single Choice)</option>
+                                <option value="multiple_choice" selected>Pilihan Jamak (Multiple Choice)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Maksimal Pilihan</label>
+                            <input type="number" id="sMaxOptions" class="form-input" value="2" min="1" max="20">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Opsi / Pilihan</label>
+                            <div class="options-builder" id="optionsBuilder"></div>
+                            <button type="button" class="btn btn-secondary mt-2" id="addOptionBtn">+ Tambah
+                                Opsi</button>
+                        </div>
+
+                        <div class="flex gap-1 mt-3">
+                            <button type="submit" class="btn btn-primary">Simpan Survei</button>
+                            <button type="button" class="btn btn-secondary" id="cancelFormBtn">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results View -->
+            <div id="view-results" class="admin-view hidden">
+                <div class="section-header">
+                    <h2>Hasil Survei</h2>
+                    <select id="resultsSurveySelect" class="form-select" style="max-width: 300px;">
+                        <option value="">Pilih survei...</option>
+                    </select>
+                </div>
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div class="confirm-overlay" id="confirmDialog">
+        <div class="confirm-box">
+            <h3 id="confirmTitle">Konfirmasi</h3>
+            <p id="confirmText">Apakah Anda yakin?</p>
+            <div class="confirm-actions">
+                <button class="btn btn-secondary" id="confirmCancel">Batal</button>
+                <button class="btn btn-danger" id="confirmOk">Ya, Lanjutkan</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>

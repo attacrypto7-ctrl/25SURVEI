@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Survei 25 - Platform Voting & Survei Sekolah">
+    <title>SURVEI 25</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="auth-logo">
+                <img src="/logo.png" alt="Logo Sekolah" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27100%27 height=%27100%27 viewBox=%270 0 100 100%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2745%27 fill=%27%236366f1%27/%3E%3Ctext x=%2750%27 y=%2755%27 text-anchor=%27middle%27 fill=%27white%27 font-size=%2736%27 font-weight=%27bold%27 font-family=%27sans-serif%27%3ES25%3C/text%3E%3C/svg%3E'">
+                <h1 class="auth-brand">SURVEI 25</h1>
+                <p class="auth-subtitle">Platform Voting & Survei Digital</p>
+            </div>
+
+            <div class="auth-card">
+                <form id="authForm">
+                    <div class="form-group">
+                        <label class="form-label" for="nama">Nama Lengkap</label>
+                        <input type="text" id="nama" class="form-input" placeholder="Masukkan nama lengkap" required autocomplete="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="no_id">No. ID / NIS</label>
+                        <input type="text" id="no_id" class="form-input" placeholder="Masukkan nomor ID" required autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="kelas">Kelas</label>
+                        <select id="kelas" class="form-select" required>
+                            <option value="" disabled selected>Pilih kelas</option>
+                            <option value="X">Kelas X</option>
+                            <option value="XI">Kelas XI</option>
+                            <option value="XII">Kelas XII</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="survey_id">Pilih Survei</label>
+                        <select id="survey_id" class="form-select" required>
+                            <option value="" disabled selected>Memuat survei...</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-block">
+                        <span id="btnText">Mulai Survei</span>
+                        <div id="btnSpinner" class="spinner hidden"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/js/auth.js"></script>
+</body>
+</html>

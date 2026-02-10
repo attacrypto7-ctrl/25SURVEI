@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Survei 25 - Halaman Voting">
+    <title>Voting - SURVEI 25</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/logo.png">
+</head>
+
+<body>
+    <div class="vote-page">
+        <div class="container">
+            <div class="vote-header">
+                <h1 id="surveyTitle">Memuat survei...</h1>
+                <p id="surveyDescription"></p>
+                <div class="text-center mt-2">
+                    <span class="vote-info" id="voteInfo">
+                        Pilih maksimal <strong id="maxOptions">0</strong> pilihan
+                    </span>
+                </div>
+            </div>
+
+            <div class="options-grid" id="optionsGrid">
+                <!-- Options will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Bar -->
+    <div class="submit-bar" id="submitBar">
+        <span class="selection-count">
+            Dipilih: <strong><span id="selectedCount">0</span> / <span id="maxCount">0</span></strong>
+        </span>
+        <button class="btn btn-primary" id="submitVoteBtn" disabled>
+            <span id="voteBtnText">Submit Pilihan</span>
+            <div id="voteBtnSpinner" class="spinner hidden"></div>
+        </button>
+    </div>
+
+    <!-- YouTube Modal -->
+    <div class="modal-overlay" id="videoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Preview</h3>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-video">
+                <iframe id="videoIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div class="confirm-overlay" id="confirmDialog">
+        <div class="confirm-box">
+            <h3>Konfirmasi Pilihan</h3>
+            <p id="confirmText">Apakah Anda yakin dengan pilihan Anda?</p>
+            <div class="confirm-actions">
+                <button class="btn btn-secondary" id="confirmCancel">Batal</button>
+                <button class="btn btn-primary" id="confirmOk">Ya, Submit!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="/js/vote.js"></script>
+</body>
+
+</html>
